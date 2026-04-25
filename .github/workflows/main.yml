@@ -1,0 +1,23 @@
+name: MacOS Test Environment
+on: [push, workflow_dispatch] # Hem dosya yüklediğinde hem de elle başlatınca çalışır
+
+jobs:
+  test-on-mac:
+    runs-on: macos-latest # İşte burası GitHub'ın senin için Mac açtığı yer
+    steps:
+      - name: Depodaki dosyaları kopyala
+        uses: actions/checkout@v4
+
+      - name: DMG dosyasını mount et (aç)
+        run: |
+          # 'dosya_adin.dmg' kısmını kendi dosya adınla değiştir
+          hdiutil attach "Снимок экрана 2026-04-04 050326.dmg" 
+          ls -R /Volumes/ # İçinde ne olduğunu listele
+
+      - name: Python yüklü mü kontrol et
+        run: python3 --version
+
+      - name: Uygulamayı/Kodu çalıştır
+        run: |
+          # Buraya kodu çalıştırma komutlarını yazabilirsin
+          echo "Test başarıyla tamamlandı"
